@@ -3,7 +3,7 @@ import "@ant-design/v5-patch-for-react-19";
 
 import type { GetProps } from "antd";
 import { useState } from "react";
-import { DatePicker, TimePicker } from "antd";
+import { DatePicker, TimePicker, Form } from "antd";
 import dayjs from "dayjs";
 
 type RangePickerProps = GetProps<typeof DatePicker>;
@@ -27,27 +27,40 @@ export const Calendar = () => {
   });
 
   return (
-    <div className="flex mb-5 justify-around">
-      <DatePicker
+    <div className="flex justify-around">
+      <Form.Item
         className="w-[45%]"
-        onChange={(_, dateString) => {
-          setDate(dateString);
-        }}
-        inputReadOnly
-        disabledDate={disabledDate}
-        showNow={false}
-        placeholder="Выберите дату"
-      />
-      <TimePicker
+        name={["user", "date"]}
+        rules={[{ required: true, message: "Выберите дату" }]}
+      >
+        <DatePicker
+          className="w-full"
+          onChange={(_, dateString) => {
+            setDate(dateString);
+          }}
+          inputReadOnly
+          disabledDate={disabledDate}
+          showNow={false}
+          placeholder="Выберите дату"
+        />
+      </Form.Item>
+
+      <Form.Item
         className="w-[45%]"
-        format={format}
-        inputReadOnly
-        disabledTime={disabledTime}
-        hideDisabledOptions
-        showNow={false}
-        minuteStep={30}
-        placeholder="Выберите время"
-      />
+        name={["user", "time"]}
+        rules={[{ required: true, message: "Выберите время" }]}
+      >
+        <TimePicker
+          className="w-full"
+          format={format}
+          inputReadOnly
+          disabledTime={disabledTime}
+          hideDisabledOptions
+          showNow={false}
+          minuteStep={30}
+          placeholder="Выберите время"
+        />
+      </Form.Item>
     </div>
   );
 };
